@@ -1,0 +1,5 @@
+# Fish shell
+fish/fish_variables
+
+# Environment variables
+.env

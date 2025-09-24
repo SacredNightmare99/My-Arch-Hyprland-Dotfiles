@@ -1,37 +1,58 @@
-# My Dotfiles for Arch Linux with Hyprland
+# My Arch Linux Hyprland Dotfiles
 
-These are my personal dotfiles for my Arch Linux setup, using Hyprland as the window manager.
+Welcome to my curated collection of configuration files ("dotfiles") for an Arch Linux setup running the Hyprland compositor. This repository is designed to provide a minimal, efficient, and visually appealing desktop environment using Wayland technologies.
 
-## Overview
+---
 
-This setup is designed for a simple and efficient workflow, with a focus on minimalism and performance.
+## Repository Structure
 
-- **Window Manager**: [Hyprland](https://hyprland.org/)
-- **Status Bar**: [Waybar](https://github.com/Alexays/Waybar)
-- **Terminal Emulator**: [Kitty](https://sw.kovidgoyal.net/kitty/)
-- **Shell**: [Fish](https://fishshell.com/) (run inside Kitty)
-- **Text Editor**: [Neovim](https://neovim.io/)
-- **Application Launcher**: [Wofi](https://hg.sr.ht/~scoopta/wofi)
+```
+.
+├── .gitignore
+├── README.md
+├── hypr/
+│   ├── hyprland.conf
+│   ├── hyprlock.conf
+│   ├── scripts/
+│   └── wallpapers/
+├── nvim/
+│   └── init.vim
+├── waybar/
+│   ├── config        (symlink or config file)
+│   ├── style.css     (symlink or stylesheet)
+│   └── themes/
+└── wlogout/
+    ├── layout
+    └── style.css
+```
 
-## Configuration
+---
 
-### Hyprland
+## Main Components
 
-The Hyprland configuration is located in `hypr/hyprland.conf`. It includes:
+### Hyprland (`hypr/`)
+- **hyprland.conf**: Main Hyprland compositor configuration — sets keybindings, window rules, and startup applications.
+- **hyprlock.conf**: Configuration for Hyprlock (lock screen).
+- **scripts/**: (Place for utility scripts used by the compositor.)
+- **wallpapers/**: (Your wallpapers for dynamic backgrounds.)
 
-- **Keybindings**: Custom keybindings for launching applications, managing windows, and controlling system settings.
-- **Window Rules**: Rules for specific applications to control their behavior.
-- **Startup Applications**: Applications that are automatically launched when Hyprland starts.
+### Neovim (`nvim/`)
+- **init.vim**: Minimal but effective Neovim configuration for fast, distraction-free coding and editing. (currently setup for Flutter Dev)
 
-### Waybar
+### Waybar (`waybar/`)
+- **config**: Configuration symlink for Waybar modules and behaviors.
+- **style.css**: Custom CSS (or symlink) for bar appearance.
+- **themes/**: Directory for alternate Waybar themes.
 
-The Waybar configuration is located in the `waybar/` directory.
+### Wlogout (`wlogout/`)
+- **layout**: Layout file for wlogout menu (logout/reboot/shutdown screen).
+- **style.css**: CSS theme for wlogout menu.
 
-- `config.jsonc`: The main configuration file for Waybar, defining the modules and their settings.
-- `style.css`: The stylesheet for Waybar, controlling the look and feel of the bar.
-- `autohide_waybar.sh`: A script to automatically hide and show the Waybar.
+---
 
-### Neovim
+## License
 
-The Neovim configuration is located in `nvim/init.vim`. It's a minimal configuration for basic text editing.
+MIT License unless otherwise noted.
+
+---
 

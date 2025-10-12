@@ -1,0 +1,55 @@
+/* wlogout style for Cyberpunk Cityscape Wallpaper */
+* {
+	background-image: none;
+	box-shadow: none;
+}
+
+window {
+	background-color: rgba(0, 0, 0, 0.0);
+}
+
+button {
+    border-radius: 0;
+    border-color: #F0A956; /* Golden-orange border */
+	text-decoration-color: #C5D1C5; /* Muted off-white text */
+    color: #C5D1C5;
+	background-color: rgba(33, 35, 42, 0.7); /* Semi-transparent dark charcoal */
+	border-style: solid;
+	border-width: 2px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 25%;
+	box-shadow: 0 0 10px #F0A956, 0 0 20px #F0A956; /* Golden-orange glow */
+}
+
+button:focus, button:active, button:hover {
+	background-color: rgba(232, 86, 97, 0.8); /* Semi-transparent neon red/pink */
+	color: #C5D1C5;
+	border-color: #F0A956;
+	box-shadow: 0 0 15px #E85661, 0 0 30px #F0A956; /* Red+gold glow */
+	outline-style: none;
+}
+
+#lock {
+    background-image: image(url("/usr/share/wlogout/icons/lock.png"), url("/usr/local/share/wlogout/icons/lock.png"));
+}
+
+#logout {
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"), url("/usr/local/share/wlogout/icons/logout.png"));
+}
+
+#suspend {
+    background-image: image(url("/usr/share/wlogout/icons/suspend.png"), url("/usr/local/share/wlogout/icons/suspend.png"));
+}
+
+#hibernate {
+    background-image: image(url("/usr/share/wlogout/icons/hibernate.png"), url("/usr/local/share/wlogout/icons/hibernate.png"));
+}
+
+#shutdown {
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"), url("/usr/local/share/wlogout/icons/shutdown.png"));
+}
+
+#reboot {
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"), url("/usr/local/share/wlogout/icons/reboot.png"));
+}

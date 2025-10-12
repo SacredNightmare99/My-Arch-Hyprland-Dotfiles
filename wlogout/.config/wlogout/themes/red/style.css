@@ -1,0 +1,55 @@
+/* wlogout style for Red Abstract Symbol Wallpaper */
+* {
+	background-image: none;
+	box-shadow: none;
+}
+
+window {
+	background-color: rgba(0, 0, 0, 0.0);
+}
+
+button {
+    border-radius: 0;
+    border-color: #E74D28; /* Fiery orange-red border */
+	text-decoration-color: #E0E0E0; /* Off-white text */
+    color: #E0E0E0;
+	background-color: rgba(30, 30, 30, 0.7); /* Semi-transparent dark charcoal */
+	border-style: solid;
+	border-width: 2px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 25%;
+	box-shadow: 0 0 10px #E74D28, 0 0 20px #E74D28; /* Fiery glow */
+}
+
+button:focus, button:active, button:hover {
+	background-color: rgba(253, 195, 12, 0.8); /* Semi-transparent warm yellow */
+	color: #E0E0E0;
+	border-color: #E74D28;
+	box-shadow: 0 0 15px #FDC30C, 0 0 30px #E74D28; /* Yellow+red glow */
+	outline-style: none;
+}
+
+#lock {
+    background-image: image(url("/usr/share/wlogout/icons/lock.png"), url("/usr/local/share/wlogout/icons/lock.png"));
+}
+
+#logout {
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"), url("/usr/local/share/wlogout/icons/logout.png"));
+}
+
+#suspend {
+    background-image: image(url("/usr/share/wlogout/icons/suspend.png"), url("/usr/local/share/wlogout/icons/suspend.png"));
+}
+
+#hibernate {
+    background-image: image(url("/usr/share/wlogout/icons/hibernate.png"), url("/usr/local/share/wlogout/icons/hibernate.png"));
+}
+
+#shutdown {
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"), url("/usr/local/share/wlogout/icons/shutdown.png"));
+}
+
+#reboot {
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"), url("/usr/local/share/wlogout/icons/reboot.png"));
+}

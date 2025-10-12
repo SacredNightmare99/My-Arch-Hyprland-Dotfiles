@@ -1,0 +1,56 @@
+/*
+ * Background: rgba(33, 35, 42, 0.95) (Semi-transparent dark charcoal)
+ * Primary Text: #C5D1C5 (Muted green/white from the sky)
+ * Focused/Critical: #E85661 (Neon red/pink)
+ * Hover/Secondary: #F0A956 (Golden orange)
+ * Darkest Accent: #21232A (For text on bright selections)
+ * Muted/Borders: #565A69 (Solid building grey) - not used as much directly in wofi for borders, but useful for context.
+*/
+
+window {
+    margin: 0px;
+    border: 2px solid #E85661; /* <-- Neon Red border */
+    background-color: rgba(33, 35, 42, 0.95); /* <-- Semi-transparent dark background */
+    border-radius: 12px;
+    box-shadow: 0px 0px 20px 4px rgba(232, 86, 97, 0.4); /* <-- Neon Red glow shadow */
+}
+
+#input {
+    margin: 8px;
+    border: 2px solid #E85661; /* <-- Neon Red border */
+    color: #C5D1C5; /* <-- Muted text color */
+    background-color: rgba(33, 35, 42, 0.9); /* <-- Slightly more opaque dark background for input */
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: none;
+}
+
+#inner-box {
+    margin: 6px;
+    background-color: transparent; /* Let the main window background show through */
+}
+
+#outer-box {
+    margin: 6px;
+    padding: 10px;
+    background-color: transparent; /* Let the main window background show through */
+}
+
+#scroll {
+    margin: 0px;
+}
+
+#text {
+    margin: 4px;
+    color: #C5D1C5; /* <-- Muted text color for entries */
+}
+
+#entry:selected {
+    background-color: #F0A956; /* <-- Golden Orange for selected item background */
+    border-radius: 8px;
+}
+
+#text:selected {
+    color: #21232A; /* <-- Darkest grey text for selected item */
+    font-weight: bold;
+}

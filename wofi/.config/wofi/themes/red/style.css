@@ -1,0 +1,54 @@
+/*
+ * Background: #1E1E1E (Dark Charcoal)
+ * Primary Accent: #E74D28 (Vibrant Orange-Red)
+ * Secondary Accent: #FDC30C (Warm Yellow-Orange)
+ * Primary Text: #E0E0E0 (Off-White)
+*/
+
+window {
+    margin: 0px;
+    border: 2px solid #E74D28; /* <-- Vibrant Orange-Red border */
+    background-color: #1E1E1E; /* <-- Dark Charcoal background */
+    border-radius: 12px;
+    box-shadow: 0px 0px 20px 4px rgba(231, 77, 40, 0.5); /* <-- Orange-Red glow */
+}
+
+#input {
+    margin: 8px;
+    border: 2px solid #E74D28; /* <-- Vibrant Orange-Red border */
+    color: #E0E0E0; /* <-- Off-White text color */
+    background-color: #1E1E1E; /* <-- Dark Charcoal background */
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: none;
+}
+
+#inner-box {
+    margin: 6px;
+    background-color: #1E1E1E; /* Consistent background */
+}
+
+#outer-box {
+    margin: 6px;
+    padding: 10px;
+    background-color: #1E1E1E; /* Consistent background */
+}
+
+#scroll {
+    margin: 0px;
+}
+
+#text {
+    margin: 4px;
+    color: #E0E0E0; /* <-- Off-White text color */
+}
+
+#entry:selected {
+    background-color: #FDC30C; /* <-- Warm Yellow-Orange for selected item */
+    border-radius: 8px;
+}
+
+#text:selected {
+    color: #1E1E1E; /* <-- Dark Charcoal text for high contrast */
+    font-weight: bold;
+}

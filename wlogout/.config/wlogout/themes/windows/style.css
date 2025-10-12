@@ -1,0 +1,55 @@
+/* wlogout style for Minimalist Red Windows Wallpaper */
+* {
+	background-image: none;
+	box-shadow: none;
+}
+
+window {
+	background-color: rgba(0, 0, 0, 0.0);
+}
+
+button {
+    border-radius: 0;
+    border-color: #D40000; /* Vibrant red border */
+	text-decoration-color: #F0F0F0; /* Light grey text */
+    color: #F0F0F0;
+	background-color: rgba(34, 34, 34, 0.7); /* Semi-transparent dark grey */
+	border-style: solid;
+	border-width: 2px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 25%;
+	box-shadow: 0 0 10px #D40000, 0 0 20px #D40000; /* Red glow */
+}
+
+button:focus, button:active, button:hover {
+	background-color: rgba(212, 0, 0, 0.8); /* Semi-transparent vibrant red */
+	color: #F0F0F0;
+	border-color: #D40000;
+	box-shadow: 0 0 15px #D40000, 0 0 30px #D40000; /* Intense red glow */
+	outline-style: none;
+}
+
+#lock {
+    background-image: image(url("/usr/share/wlogout/icons/lock.png"), url("/usr/local/share/wlogout/icons/lock.png"));
+}
+
+#logout {
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"), url("/usr/local/share/wlogout/icons/logout.png"));
+}
+
+#suspend {
+    background-image: image(url("/usr/share/wlogout/icons/suspend.png"), url("/usr/local/share/wlogout/icons/suspend.png"));
+}
+
+#hibernate {
+    background-image: image(url("/usr/share/wlogout/icons/hibernate.png"), url("/usr/local/share/wlogout/icons/hibernate.png"));
+}
+
+#shutdown {
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"), url("/usr/local/share/wlogout/icons/shutdown.png"));
+}
+
+#reboot {
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"), url("/usr/local/share/wlogout/icons/reboot.png"));
+}

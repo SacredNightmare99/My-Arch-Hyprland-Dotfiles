@@ -1,0 +1,54 @@
+/*
+ * Background: #222222 (Dark Grey)
+ * Primary Accent: #D40000 (Vibrant Red from logo)
+ * Primary Text: #F0F0F0 (Light Grey for readability)
+ * Selected Text: #1A1A1A (Very Dark Grey/Almost Black for contrast)
+*/
+
+window {
+    margin: 0px;
+    border: 2px solid #D40000; /* <-- Vibrant Red border */
+    background-color: #222222; /* <-- Dark Grey background */
+    border-radius: 12px;
+    box-shadow: 0px 0px 20px 4px rgba(212, 0, 0, 0.4); /* <-- Red glow shadow */
+}
+
+#input {
+    margin: 8px;
+    border: 2px solid #D40000; /* <-- Vibrant Red border */
+    color: #F0F0F0; /* <-- Light Grey text color */
+    background-color: #222222; /* <-- Dark Grey input background */
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: none;
+}
+
+#inner-box {
+    margin: 6px;
+    background-color: #222222; /* Consistent dark grey background */
+}
+
+#outer-box {
+    margin: 6px;
+    padding: 10px;
+    background-color: #222222; /* Consistent dark grey background */
+}
+
+#scroll {
+    margin: 0px;
+}
+
+#text {
+    margin: 4px;
+    color: #F0F0F0; /* <-- Light Grey for entries */
+}
+
+#entry:selected {
+    background-color: #D40000; /* <-- Vibrant Red for selected item background */
+    border-radius: 8px;
+}
+
+#text:selected {
+    color: #1A1A1A; /* <-- Very Dark Grey/Almost Black text for selected item */
+    font-weight: bold;
+}

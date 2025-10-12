@@ -1,0 +1,153 @@
+/*
+ * Background: #1E1E1E (Dark Grey)
+ * Primary Accent (Vibrant): #E74D28 (Vibrant Orange/Red)
+ * Secondary Accent (Warm): #FDC30C (Warm Yellow/Orange)
+ * Primary Text: #E0E0E0 (Light Grey/Off-white)
+ * Muted/Borders: #4A4A4A (Darker Grey)
+*/
+
+* {
+    font-family: JetBrainsMonoNF;
+    font-size: 13px;
+}
+
+window#waybar {
+    background: transparent;
+    border: none;
+    color: #E0E0E0; /* <-- Main text color */
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    margin: 0 10px;
+    padding: 0 5px;
+    background-color: #1E1E1E; /* <-- Module background (Dark Grey from wallpaper) */
+    border-radius: 10px;
+    border-color: #4A4A4A; /* <-- Border color (Darker Grey) */
+    border-width: 3px;
+    border-style: groove;
+}
+
+.modules-left > widget,
+.modules-center > widget,
+.modules-right > widget {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    background-color: transparent;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+button {
+    box-shadow: inset 0 -3px transparent;
+    border: none;
+    border-radius: 0;
+}
+button:hover {
+    background: inherit;
+    box-shadow: inset 0 -2px #FDC30C; /* <-- Hover color (Warm Yellow/Orange) */
+}
+
+#workspaces button {
+  padding: 0 6px;
+  background-color: transparent;
+  color: #E0E0E0; /* <-- Inactive workspace color */
+  font-size: 16px;
+}
+
+#workspaces button.focused {
+  background-color: transparent;
+  color: #E74D28; /* <-- Focused workspace color (Vibrant Orange/Red) */
+  box-shadow: inset 0 -2px #FDC30C; /* <-- Underline on focused (Warm Yellow/Orange) */
+}
+
+#workspaces button.urgent {
+  color: #E74D28; /* <-- Urgent workspace color (Vibrant Orange/Red) */
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#tray,
+#power-profiles-daemon {
+    padding: 0 8px;
+    color: #E0E0E0; /* <-- Default module text */
+    background-color: transparent;
+}
+
+#clock {
+  padding: 0 25px;
+}
+
+#window,
+#workspaces {
+    margin: 0 4px;
+}
+
+#battery.charging,
+#battery.plugged {
+    background-color: #FDC30C; /* <-- Charging BG (Warm Yellow/Orange) */
+    color: #1E1E1E; /* <-- Charging Text (Dark Grey) */
+}
+#battery.critical:not(.charging) {
+    background-color: #E74D28; /* <-- Critical BG (Vibrant Orange/Red) */
+    color: #1E1E1E; /* <-- Critical Text (Dark Grey) */
+    animation: blink 0.5s steps(12) infinite alternate;
+}
+
+@keyframes blink {
+    to {
+        background-color: #E0E0E0; /* <-- Blink to light grey */
+        color: #1E1E1E; /* <-- Blink text to dark grey */
+    }
+}
+
+#power-profiles-daemon.performance {
+    color: #E74D28; /* <-- Performance (Vibrant Orange/Red) */
+}
+#power-profiles-daemon.balanced {
+    color: #E0E0E0; /* <-- Balanced (Light Grey) */
+}
+#power-profiles-daemon.power-saver {
+    color: #98971A; /* <-- Power Saver (Green) */
+}
+
+#cpu {
+    color: #E0E0E0;
+}
+#memory {
+    color: #E0E0E0;
+}
+#temperature {
+    color: #E0E0E0;
+}
+#temperature.critical {
+    color: #E74D28; /* <-- Critical Temperature (Vibrant Orange/Red) */
+}
+#backlight {
+    color: #E0E0E0;
+}
+#network {
+    color: #E0E0E0;
+}
+#network.disconnected {
+    color: #E74D28; /* <-- Disconnected (Vibrant Orange/Red) */
+}
+#pulseaudio {
+    color: #E0E0E0;
+}
+#pulseaudio.muted {
+    color: #4A4A4A; /* <-- Muted (Darker Grey) */
+}
+
+#tray > .needs-attention {
+    background-color: #E74D28; /* <-- Tray attention (Vibrant Orange/Red) */
+}

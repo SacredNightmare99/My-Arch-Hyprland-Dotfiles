@@ -16,9 +16,14 @@ A sleek, developer-focused, and highly themeable Hyprland configuration managed 
 The theme switcher script (`theme_toggle.sh`) controls the following themes:
 
 1.  **Gruvbox**: A cozy, cyberpunk-inspired theme using the `sushi.jpg` wallpaper and a gruvbox color palette across all UI elements.
-2.  **Red**: A vibrant, abstract theme featuring the `red.jpg` wallpaper and a fiery red/orange color scheme.
-3.  **Windows**: A minimalist, dark theme inspired by the `windows.jpg` wallpaper with a clean, red-accented look.
+   <img width="1921" height="1081" alt="image" src="https://github.com/user-attachments/assets/93570e36-dd66-44af-a569-b2ae748553c7" />
 
+2.  **Red**: A vibrant, abstract theme featuring the `red.jpg` wallpaper and a fiery red/orange color scheme.
+   <img width="1921" height="1081" alt="image" src="https://github.com/user-attachments/assets/c3ec7df7-67ce-496e-931e-348e297ec050" />
+
+3.  **Windows**: A minimalist, dark theme using [win-10-style-waybar](https://github.com/TheFrankyDoll/win10-style-waybar) and a wallpaper with a clean, red-accented look.
+   <img width="1921" height="1081" alt="image" src="https://github.com/user-attachments/assets/127dd675-ea4e-47fd-9b7f-b490d4337ed2" />
+   
 ## Dependencies
 
 To use this configuration, you will need to install the following packages.

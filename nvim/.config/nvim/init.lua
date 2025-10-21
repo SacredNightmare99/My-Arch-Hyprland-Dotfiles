@@ -79,7 +79,7 @@ vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { noremap = tr
 -- Treesitter
 --=====================
 require("nvim-treesitter.configs").setup {
-  ensure_installed = { "dart", "lua", "vim", "json", "c", "html", "css", "typescript", "asm" },
+  ensure_installed = { "dart", "lua", "vim", "json", "c", "html", "css", "typescript", "asm", "go" },
   highlight = { enable = true },
 }
 

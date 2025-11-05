@@ -1,6 +1,9 @@
---=====================
+-- =====================
 -- Basic settings
---=====================
+-- =====================
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.tabstop = 2
@@ -9,190 +12,260 @@ vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.mouse = "a"
 vim.opt.autoread = true
-
---=====================
--- Plugin manager (vim-plug still works with init.lua)
---=====================
-vim.cmd [[
-call plug#begin('~/.vim/plugged')
-
-" Gruvbox Theme
-Plug 'morhetz/gruvbox'
-
-" vim-airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" File explorer
-Plug 'nvim-tree/nvim-tree.lua'
-Plug 'nvim-tree/nvim-web-devicons'
-
-" Telescope (Ctrl+P like fuzzy finder)
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-lua/plenary.nvim'
-
-" Dart / Flutter
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'akinsho/flutter-tools.nvim'
-
-" LSP + completion
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'windwp/nvim-autopairs'
-
-" Treesitter (better highlighting)
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-" Optional plugins
-Plug 'folke/which-key.nvim'
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'tpope/vim-fugitive'
-
-call plug#end()
-]]
-
---=====================
--- Theme
---=====================
 vim.o.background = "dark"
-vim.cmd("colorscheme gruvbox")
 
---=====================
--- nvim-tree
---=====================
-require("nvim-tree").setup {
-  update_cwd = true,
-  respect_buf_cwd = true,
-}
-vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
-
---=====================
--- Telescope
---=====================
-vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<cr>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { noremap = true, silent = true })
-
---=====================
--- Treesitter
---=====================
-require("nvim-treesitter.configs").setup {
-  ensure_installed = { "dart", "lua", "vim", "json", "c", "html", "css", "typescript", "asm", "go" },
-  highlight = { enable = true },
-}
-
---=====================
--- LSP + Flutter setup
---=====================
-local on_attach = function(_, bufnr)
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', '<C-.>', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+-- =====================
+-- Bootstrap lazy.nvim
+-- =====================
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git", "clone", "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-local cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if cmp_ok then
-  capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
-end
+-- =====================
+-- Plugins
+-- =====================
+require("lazy").setup({
 
-require("flutter-tools").setup {
-  lsp = {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = { debounce_text_changes = 150 },
+  -- Theme (modern Lua version)
+  {
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000,
+    config = function()
+      require("gruvbox").setup({})
+      vim.cmd.colorscheme("gruvbox")
+    end,
   },
-}
 
--- Workaround: Restart dartls automatically if it crashes on text edits
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    update_in_insert = false,
-  }
-)
-
---=====================
--- Autopairs
---=====================
-require("nvim-autopairs").setup {}
-
---=====================
--- Auto-restart Dart LSP on RangeError
---=====================
-local default_handler = vim.lsp.handlers["window/showMessage"]
-vim.lsp.handlers["window/showMessage"] = function(err, result, ctx, config)
-  if result.message and result.message:match("RangeError: The edit extends past the end of the code") then
-    vim.schedule(function()
-      vim.cmd("LspRestart")
-      print("⚡ dartls restarted due to RangeError")
-    end)
-  else
-    default_handler(err, result, ctx, config)
-  end
-end
-
---=====================
--- Completion (nvim-cmp)
---=====================
-local cmp = require("cmp")
-cmp.setup {
-  mapping = {
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    ["<Tab>"] = cmp.mapping.select_next_item(),
-    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+  -- Statusline
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("lualine").setup({
+        options = {
+          theme = "gruvbox",
+          globalstatus = true,
+          section_separators = { left = "", right = "" },
+          component_separators = { left = "│", right = "│" },
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { "branch", "diff", "diagnostics" },
+          lualine_c = { { "filename", path = 1 } },
+          lualine_x = { "encoding", "fileformat", "filetype" },
+          lualine_y = { "progress" },
+          lualine_z = { "location" },
+        },
+      })
+    end,
   },
-  sources = { { name = "nvim_lsp" } },
-}
 
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+  -- neo-tree (replaces nvim-tree)
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    },
+    keys = {
+      { "<C-n>", ":Neotree toggle<CR>", desc = "Toggle NeoTree" },
+    },
+    config = function()
+      require("neo-tree").setup({
+        close_if_last_window = false,
+        enable_git_status = true,
+        enable_diagnostics = true,
+        filesystem = {
+          filtered_items = { visible = false, hide_dotfiles = false },
+          follow_current_file = { enabled = true },
+          hijack_netrw_behavior = "open_default",
+          window = {
+            mappings = {
+              ["<tab>"] = function(state)
+                local node = state.tree:get_node()
+                if node.type == "file" then
+                  require("neo-tree.sources.filesystem.commands").open(state, { open_cmd = "vsplit" })
+                end
+              end,
+              ["<cr>"] = "open",
+              ["l"] = "open",
+              ["h"] = "close_node",
+            },
+          },
+        },
+      })
+    end,
+  },
 
---=====================
--- gitsigns
---=====================
-require("gitsigns").setup()
+  -- Telescope
+  {
+    "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+      { "<C-p>",      "<cmd>Telescope find_files<cr>", desc = "Find files" },
+      { "<leader>fg", "<cmd>Telescope live_grep<cr>",  desc = "Grep" },
+      { "<leader>fb", "<cmd>Telescope buffers<cr>",    desc = "Buffers" },
+      { "<leader>fh", "<cmd>Telescope help_tags<cr>",  desc = "Help" },
+    },
+  },
 
---=====================
--- which-key
---=====================
-require("which-key").setup {}
+  -- Treesitter
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      ensure_installed = { "dart", "lua", "vim", "json", "c", "html", "css", "typescript", "go", "python" },
+      highlight = { enable = true },
+    },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
+  },
 
---=====================
--- Keymaps like VS Code
---=====================
+  -- Mason (LSP installer)
+  {
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate",
+    config = function()
+      require("mason").setup()
+    end,
+  },
+  { "williamboman/mason-lspconfig.nvim", dependencies = { "mason.nvim" } },
+
+  -- LSP base config
+  {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      -- Attach Dart later in flutter-tools, this covers others
+      require("mason-lspconfig").setup({
+        ensure_installed = { "lua_ls", "jsonls", "html", "cssls" },
+        handlers = {
+          function(server)
+            lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities })
+          end,
+        },
+      })
+    end,
+  },
+
+  -- Completion
+  {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    dependencies = { "hrsh7th/cmp-nvim-lsp" },
+    config = function()
+      local cmp = require("cmp")
+      cmp.setup({
+        mapping = {
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<Tab>"] = cmp.mapping.select_next_item(),
+          ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+        },
+        sources = { { name = "nvim_lsp" } },
+      })
+    end,
+  },
+
+  -- Autopairs + cmp integration
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-autopairs").setup({})
+      local ok, cmp = pcall(require, "cmp")
+      if ok then
+        local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+        cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+      end
+    end,
+  },
+
+  -- Formatter: conform.nvim
+  {
+    "stevearc/conform.nvim",
+    event = "BufWritePre",
+    config = function()
+      require("conform").setup({
+        formatters_by_ft = {
+          dart = { "dart_format" },
+          lua = { "stylua" },
+          json = { "jq" },
+        },
+        format_on_save = {
+          timeout_ms = 2000,
+          lsp_fallback = true,
+        },
+      })
+    end,
+  },
+
+  -- Flutter
+  {
+    "akinsho/flutter-tools.nvim",
+    ft = { "dart" },
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    config = function()
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      require("flutter-tools").setup({
+        lsp = {
+          capabilities = capabilities,
+          flags = { debounce_text_changes = 150 },
+        },
+      })
+    end,
+  },
+
+  -- Git tools
+  {
+    "lewis6991/gitsigns.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    config = function() require("gitsigns").setup() end,
+  },
+  { "tpope/vim-fugitive",                cmd = { "Git", "G" } },
+
+  -- which-key
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    config = function() require("which-key").setup() end,
+  },
+
+}, { checker = { enabled = false } })
+
+-- =====================
+-- Keymaps
+-- =====================
 vim.keymap.set("n", "<C-a>", "ggVG", { noremap = true, silent = true })
 
--- Format Dart before save
--- vim.api.nvim_create_autocmd("BufWritePre", {
---   pattern = "*.dart",
---   callback = function() vim.lsp.buf.format() end,
--- })
-
--- Format Dart before save safely
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.dart",
-  callback = function()
-    -- use async to avoid blocking didChange notifications
-    vim.lsp.buf.format({ async = false })
+-- =====================
+-- Global LSP keymaps (apply to every LSP automatically)
+-- =====================
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspKeymaps", {}),
+  callback = function(event)
+    local opts = { buffer = event.buf, silent = true }
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("n", "<leader>f", function()
+      vim.lsp.buf.format({ async = false })
+    end, opts)
   end,
 })
-
---=====================
--- Airline config
---=====================
-vim.g["airline#extensions#tabline#enabled"] = 1
-vim.g["airline#extensions#branch#enabled"] = 1
-vim.g["airline_theme"] = "molokai"
-vim.g.airline_powerline_fonts = 1
-vim.g.airline_symbols = {
-  linenr = "",
-  branch = "",
-  paste = "ρ",
-  whitespace = "Ξ",
-}
-

@@ -85,7 +85,7 @@ require("lazy").setup({
         enable_git_status = true,
         enable_diagnostics = true,
         filesystem = {
-          filtered_items = { visible = false, hide_dotfiles = false },
+          filtered_items = { visible = true, hide_dotfiles = false },
           follow_current_file = { enabled = true },
           hijack_netrw_behavior = "open_default",
           window = {
@@ -126,7 +126,7 @@ require("lazy").setup({
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
     opts = {
-      ensure_installed = { "dart", "lua", "vim", "json", "c", "html", "css", "typescript", "go", "python" },
+      ensure_installed = { "dart", "lua", "vim", "json", "c", "html", "css", "typescript", "go", "python", "javascript" },
       highlight = { enable = true },
     },
     config = function(_, opts)

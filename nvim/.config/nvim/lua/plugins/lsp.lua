@@ -8,13 +8,18 @@ return {
     end,
   },
 
-  -- Mason-LSPConfig
+  -- Mason-lspconfig bridge
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim" },
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = { "lua_ls", "jsonls", "html", "cssls" },
+      })
+    end,
   },
 
-  -- LSP base + autoinstall
+  -- LSP (NEW Neovim API)
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
@@ -24,50 +29,61 @@ return {
       "j-hui/fidget.nvim",
       "folke/trouble.nvim",
     },
+
     config = function()
-      local lspconfig = require("lspconfig")
       local mason_lspconfig = require("mason-lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local on_attach = require("core.lsp").on_attach
 
-      -- Fidget: LSP progress
       require("fidget").setup({})
-
-      mason_lspconfig.setup({
-        ensure_installed = { "lua_ls", "jsonls", "html", "cssls" },
-      })
-
-      mason_lspconfig.setup_handlers({
-        function(server)
-          local opts = {
-            on_attach = on_attach,
-            capabilities = capabilities,
-          }
-
-          if server == "lua_ls" then
-            opts.settings = {
-              Lua = {
-                diagnostics = {
-                  globals = { "vim" },
-                },
-                workspace = {
-                  library = vim.api.nvim_get_runtime_file("", true),
-                  checkThirdParty = false,
-                },
-              },
-            }
-          end
-
-          lspconfig[server].setup(opts)
-        end,
-      })
-
-      -- Trouble setup
       require("trouble").setup({})
+
+      -- Installed servers via Mason
+      local servers = mason_lspconfig.get_installed_servers()
+
+      for _, server in ipairs(servers) do
+        -- Get the default server config (NEW API)
+        local default_config = vim.lsp.config[server]
+        if not default_config then
+          vim.notify("No LSP config found for: " .. server, vim.log.levels.WARN)
+          goto continue
+        end
+
+        -- Override defaults
+        local custom = {
+          on_attach = on_attach,
+          capabilities = capabilities,
+        }
+
+        -- Special case: Lua language server
+        if server == "lua_ls" then
+          custom.settings = {
+            Lua = {
+              diagnostics = { globals = { "vim" } },
+              workspace = {
+                checkThirdParty = false,
+                library = vim.api.nvim_get_runtime_file("", true),
+              },
+            },
+          }
+        end
+
+        -- Merge Mason config + overrides
+        local final_config = vim.tbl_deep_extend(
+          "force",
+          default_config,
+          custom
+        )
+
+        -- Start LSP with new API
+        vim.lsp.start(final_config)
+
+        ::continue::
+      end
     end,
   },
 
-  -- Flutter
+  -- Flutter-tools
   {
     "akinsho/flutter-tools.nvim",
     ft = { "dart" },
@@ -79,6 +95,7 @@ return {
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local on_attach = require("core.lsp").on_attach
+
       require("flutter-tools").setup({
         lsp = {
           on_attach = on_attach,

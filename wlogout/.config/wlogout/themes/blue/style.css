@@ -1,0 +1,78 @@
+/* Cyber-Ninja Wlogout Theme (wallpaper-matched) */
+
+* {
+  background-image: none;
+  box-shadow: none;
+}
+
+window {
+  background-color: rgba(0, 0, 0, 0.0);
+}
+
+/* Core button styling */
+button {
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #6A86B8;
+  /* steel blue border */
+  background-color: rgba(27, 34, 48, 0.75);
+  /* dark navy glass */
+  color: #D5D9E0;
+  /* soft white text */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30%;
+  padding: 20px;
+  box-shadow: 0 0 8px #6A86B8, 0 0 16px #1B2230;
+  /* subtle blue glow */
+}
+
+/* Hover / Active */
+button:focus,
+button:active,
+button:hover {
+  background-color: rgba(210, 84, 99, 0.85);
+  /* red accent glow */
+  border-color: #8BB9E8;
+  /* bright cyan highlight */
+  color: #0F141D;
+  /* dark text for contrast */
+  box-shadow:
+    0 0 12px #D25463,
+    /* red glow */
+    0 0 24px #8BB9E8;
+  /* cyan glow */
+  outline: none;
+}
+
+/* Icons (system paths fallback) */
+#lock {
+  background-image: image(url("/usr/share/wlogout/icons/lock.png"),
+      url("/usr/local/share/wlogout/icons/lock.png"));
+}
+
+#logout {
+  background-image: image(url("/usr/share/wlogout/icons/logout.png"),
+      url("/usr/local/share/wlogout/icons/logout.png"));
+}
+
+#suspend {
+  background-image: image(url("/usr/share/wlogout/icons/suspend.png"),
+      url("/usr/local/share/wlogout/icons/suspend.png"));
+}
+
+#hibernate {
+  background-image: image(url("/usr/share/wlogout/icons/hibernate.png"),
+      url("/usr/local/share/wlogout/icons/hibernate.png"));
+}
+
+#shutdown {
+  background-image: image(url("/usr/share/wlogout/icons/shutdown.png"),
+      url("/usr/local/share/wlogout/icons/shutdown.png"));
+}
+
+#reboot {
+  background-image: image(url("/usr/share/wlogout/icons/reboot.png"),
+      url("/usr/local/share/wlogout/icons/reboot.png"));
+}

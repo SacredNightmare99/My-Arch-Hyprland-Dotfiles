@@ -1,0 +1,70 @@
+/*
+ * Palette:
+ * Navy: #1B2230
+ * Red: #D25463
+ * Steel Blue: #6A86B8
+ * Light Blue: #8BB9E8
+ * Text: #D5D9E0
+ * Grey: #3A4150
+ * Dark Text: #0F141D
+*/
+
+window {
+  margin: 0;
+  border: 2px solid #D25463;
+  /* red accent */
+  background-color: rgba(27, 34, 48, 0.95);
+  /* navy glass */
+  border-radius: 12px;
+  box-shadow: 0px 0px 20px 4px rgba(210, 84, 99, 0.4);
+  /* red glow */
+}
+
+#input {
+  margin: 8px;
+  padding: 6px;
+  border: 2px solid #6A86B8;
+  /* steel blue border */
+  background-color: rgba(27, 34, 48, 0.90);
+  color: #D5D9E0;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+#outer-box {
+  margin: 6px;
+  padding: 10px;
+  background: transparent;
+}
+
+#inner-box {
+  margin: 6px;
+  background: transparent;
+}
+
+#scroll {
+  margin: 0;
+}
+
+#entry {
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+#text {
+  margin: 4px;
+  color: #D5D9E0;
+  /* default text */
+}
+
+#entry:selected {
+  background-color: #8BB9E8;
+  /* light blue highlight */
+  border-radius: 8px;
+}
+
+#text:selected {
+  color: #0F141D;
+  /* dark navy on highlight */
+  font-weight: bold;
+}

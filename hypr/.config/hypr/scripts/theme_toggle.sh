@@ -34,7 +34,7 @@ windows_wofi_style="$HOME/.config/wofi/themes/windows/style.css"
 windows_wlogout_style="$HOME/.config/wlogout/themes/windows/style.css"
 
 # Target symlinks
-waybar_config_link="$HOME/.config/waybar/config"
+waybar_config_link="$HOME/.config/waybar/config.jsonc"
 waybar_style_link="$HOME/.config/waybar/style.css"
 current_wallpaper_link="$HOME/.config/hypr/wallpapers/current.jpg"
 wofi_style_link="$HOME/.config/wofi/style.css"

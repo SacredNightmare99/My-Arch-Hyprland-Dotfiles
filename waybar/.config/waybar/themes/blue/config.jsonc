@@ -99,7 +99,8 @@
       "",
       "",
       ""
-    ]
+    ],
+    "on-click": "~/.config/hypr/scripts/night_light_toggle.sh"
   },
   // =========================
   // Battery Module

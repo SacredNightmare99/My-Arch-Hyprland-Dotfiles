@@ -33,6 +33,12 @@ return {
     config = function()
       local mason_lspconfig = require("mason-lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+      }
+
       local on_attach = require("core.lsp").on_attach
 
       require("fidget").setup({})
@@ -94,6 +100,12 @@ return {
     },
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+      }
+
       local on_attach = require("core.lsp").on_attach
 
       require("flutter-tools").setup({

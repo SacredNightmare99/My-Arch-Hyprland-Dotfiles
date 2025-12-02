@@ -161,4 +161,11 @@ return {
       require("ufo").setup()
     end
   },
+
+  -- render-markdown
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    opts = {},
+  },
 }

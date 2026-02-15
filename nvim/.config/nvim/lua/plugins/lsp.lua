@@ -14,12 +14,12 @@ return {
     dependencies = { "williamboman/mason.nvim" },
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "jsonls", "html", "cssls" },
+        ensure_installed = { "lua_ls", "jsonls", "html", "cssls", "textlab" },
       })
     end,
   },
 
-  -- LSP (NEW Neovim API)
+  -- LSP
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },

@@ -92,14 +92,14 @@ apply_theme() {
         exit 1
     fi
 
-    # Ensure swww-daemon is running
-    if ! pgrep -x "swww-daemon" >/dev/null; then
-        swww-daemon &
+    # Ensure awww-daemon is running
+    if ! pgrep -x "awww-daemon" >/dev/null; then
+        awww-daemon &
         sleep 0.4
     fi
 
     # Apply wallpaper
-    swww img "$wallpaper" --transition-type wipe --transition-angle 30 --transition-step 90
+    awww img "$wallpaper" --transition-type wipe --transition-angle 30 --transition-step 90
 
     # Update symlinks
     rm -f "$waybar_config_link" "$waybar_style_link" "$current_wallpaper_link" "$wofi_style_link" "$wlogout_style_link"

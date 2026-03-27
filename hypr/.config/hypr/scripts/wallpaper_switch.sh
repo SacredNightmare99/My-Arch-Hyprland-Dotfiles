@@ -37,9 +37,9 @@ selected=$(echo "$wallpaper_list" | wofi --dmenu -p "Select Wallpaper ($theme)")
 
 full_path="$wallpaper_dir/$selected"
 
-# Ensure swww-daemon is running
-if ! pgrep -x "swww-daemon" >/dev/null; then
-    swww-daemon &
+# Ensure awww-daemon is running
+if ! pgrep -x "awww-daemon" >/dev/null; then
+    awww-daemon &
     sleep 0.4
 fi
 
@@ -47,7 +47,7 @@ fi
 rm -f "$current_wallpaper_link"
 ln -s "$full_path" "$current_wallpaper_link"
 
-swww img "$full_path" --transition-type fade --transition-step 50
+awww img "$full_path" --transition-type fade --transition-step 50
 
 # Save wallpaper state for this theme
 echo "$full_path" > "${WALL_STATE_PREFIX}${theme}"

@@ -1,34 +1,38 @@
-/* Windows — Fluent UI style */
+/* Ember — warm cozy */
 
 * {
   background-image: none;
 }
 
 window {
-  background-color: rgba(32, 34, 38, 0.95);
+  background-color: rgba(0, 0, 0, 0.35);
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid #3c3f45;
+  border-radius: 10px;
+  border: 2px solid #5a4025;
 
-  background-color: rgba(45, 47, 52, 0.9);
-  color: #e6e6e6;
+  background-color: rgba(20, 14, 8, 0.85);
+  color: #e6d3b3;
 
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 28%;
-  padding: 18px;
+  background-size: 30%;
+  padding: 20px;
+
+  box-shadow: 0 0 10px rgba(224, 175, 104, 0.2);
 }
 
 button:hover {
-  background-color: rgba(76, 194, 255, 0.2);
-  border-color: #4cc2ff;
-  color: #ffffff;
+  background-color: #e0af68;
+  border-color: #d79921;
+  color: #140e08;
+
+  box-shadow: 0 0 14px #e0af68;
 }
 
 button:focus {
-  outline: 2px solid #4cc2ff;
+  outline: 2px solid #e0af68;
 }
 
 /* Icons */

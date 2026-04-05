@@ -28,7 +28,7 @@ set_wallpaper() {
         if ! pgrep -x "awww-daemon" >/dev/null; then
             awww-daemon & sleep 0.3
         fi
-        awww img "$file" --transition-type wipe --transition-angle 30
+        awww img "$file" --transition-type none
     fi
 }
 

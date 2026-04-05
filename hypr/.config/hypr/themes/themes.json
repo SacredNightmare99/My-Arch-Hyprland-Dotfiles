@@ -4,146 +4,242 @@
       "id": "arch",
       "path": "wallpapers/assets/arch.png",
       "tags": [
-        "blue",
-        "dark"
-      ]
-    },
-    {
-      "id": "atoms",
-      "path": "wallpapers/assets/atoms.png",
-      "tags": [
-        "gruvbox",
-        "dark"
-      ]
-    },
-    {
-      "id": "black",
-      "path": "wallpapers/assets/black.jpg",
-      "tags": [
-        "dark"
-      ]
-    },
-    {
-      "id": "gold",
-      "path": "wallpapers/assets/gold.png",
-      "tags": [
-        "gruvbox",
-        "warm"
-      ]
-    },
-    {
-      "id": "home",
-      "path": "wallpapers/assets/home.jpg",
-      "tags": [
-        "light"
-      ]
-    },
-    {
-      "id": "ocean",
-      "path": "wallpapers/assets/ocean_with_cloud.png",
-      "tags": [
-        "blue",
-        "light"
+        "ember"
       ]
     },
     {
       "id": "red",
       "path": "wallpapers/assets/red.jpg",
       "tags": [
-        "red",
-        "dark"
-      ]
-    },
-    {
-      "id": "sushi",
-      "path": "wallpapers/assets/sushi.jpg",
-      "tags": [
-        "gruvbox",
-        "warm"
+        "crimson"
       ]
     },
     {
       "id": "windows",
       "path": "wallpapers/assets/windows.jpg",
       "tags": [
-        "light"
+        "windows"
       ]
     },
     {
-      "id": "train",
-      "path": "wallpapers/assets/aesthetic-landscape-with-train.3840x2160.mp4",
+      "id": "blue",
+      "path": "wallpapers/assets/black.jpg",
       "tags": [
-        "dark",
-        "cinematic"
+        "obsidian",
+        "aether"
+      ]
+    },
+    {
+      "id": "atoms",
+      "path": "wallpapers/assets/atoms.png",
+      "tags": [
+        "ember"
+      ]
+    },
+    {
+      "id": "gold",
+      "path": "wallpapers/assets/gold.png",
+      "tags": [
+        "ember"
+      ]
+    },
+    {
+      "id": "home",
+      "path": "wallpapers/assets/home.jpg",
+      "tags": [
+        "obsidian"
+      ]
+    },
+    {
+      "id": "sushi",
+      "path": "wallpapers/assets/sushi.jpg",
+      "tags": [
+        "ember"
+      ]
+    },
+    {
+      "id": "yin_yang",
+      "path": "wallpapers/assets/yin-and-yang.1920x1080.mp4",
+      "tags": [
+        "obsidian",
+        "drift"
+      ]
+    },
+    {
+      "id": "sakura_pixel",
+      "path": "wallpapers/assets/pixel-sakura.1920x1080.mp4",
+      "tags": [
+        "drift"
+      ]
+    },
+    {
+      "id": "never_give_up",
+      "path": "wallpapers/assets/never-give-up.1920x1080.mp4",
+      "tags": [
+        "obsidian"
+      ]
+    },
+    {
+      "id": "samurai",
+      "path": "wallpapers/assets/minimalistic-samurai.1920x1080.mp4",
+      "tags": [
+        "crimson",
+        "obsidian"
+      ]
+    },
+    {
+      "id": "windows_gradient",
+      "path": "wallpapers/assets/windows-11-logo-gradient.1920x1080.mp4",
+      "tags": [
+        "windows"
+      ]
+    },
+    {
+      "id": "windows_minimal",
+      "path": "wallpapers/assets/minimalist-windows-11.1920x1080.mp4",
+      "tags": [
+        "windows",
+        "aether"
+      ]
+    },
+    {
+      "id": "hp_logo",
+      "path": "wallpapers/assets/hp-logo.1920x1080.mp4",
+      "tags": [
+        "aether"
+      ]
+    },
+    {
+      "id": "gradient_cube",
+      "path": "wallpapers/assets/gradient-3d-cube.1920x1080.mp4",
+      "tags": [
+        "aether",
+        "drift"
       ]
     },
     {
       "id": "graceful_defeat",
       "path": "wallpapers/assets/graceful-defeat.1920x1080.mp4",
       "tags": [
-        "red",
-        "dark",
-        "anime"
+        "crimson"
+      ]
+    },
+    {
+      "id": "happy_pixel",
+      "path": "wallpapers/assets/colorful-pixel-quote.1920x1080.mp4",
+      "tags": [
+        "drift"
+      ]
+    },
+    {
+      "id": "life_death",
+      "path": "wallpapers/assets/life-and-death.1920x1080.mp4",
+      "tags": [
+        "obsidian"
+      ]
+    },
+    {
+      "id": "train_city",
+      "path": "wallpapers/assets/aesthetic-landscape-with-train.3840x2160.mp4",
+      "tags": [
+        "drift",
+        "aether"
       ]
     }
   ],
   "components": {
     "waybar": {
-      "gruvbox": "waybar/gruvbox",
-      "red": "waybar/red",
-      "blue": "waybar/blue",
+      "obsidian": "waybar/obsidian",
+      "crimson": "waybar/crimson",
+      "aether": "waybar/aether",
+      "ember": "waybar/ember",
+      "drift": "waybar/drift",
       "windows": "waybar/windows"
     },
     "wofi": {
-      "gruvbox": "wofi/gruvbox/style.css",
-      "red": "wofi/red/style.css",
-      "blue": "wofi/blue/style.css",
+      "obsidian": "wofi/obsidian/style.css",
+      "crimson": "wofi/crimson/style.css",
+      "aether": "wofi/aether/style.css",
+      "ember": "wofi/ember/style.css",
+      "drift": "wofi/drift/style.css",
       "windows": "wofi/windows/style.css"
     },
     "wlogout": {
-      "gruvbox": "wlogout/gruvbox/style.css",
-      "red": "wlogout/red/style.css",
-      "blue": "wlogout/blue/style.css",
+      "obsidian": "wlogout/obsidian/style.css",
+      "crimson": "wlogout/crimson/style.css",
+      "aether": "wlogout/aether/style.css",
+      "ember": "wlogout/ember/style.css",
+      "drift": "wlogout/drift/style.css",
       "windows": "wlogout/windows/style.css"
     }
   },
   "themes": {
-    "gruvbox": {
+    "obsidian": {
       "tags": [
-        "gruvbox",
-        "dark"
+        "obsidian",
+        "dark",
+        "minimal"
       ],
       "components": {
-        "waybar": "gruvbox",
-        "wofi": "gruvbox",
-        "wlogout": "gruvbox"
+        "waybar": "obsidian",
+        "wofi": "obsidian",
+        "wlogout": "obsidian"
       }
     },
-    "red": {
+    "crimson": {
       "tags": [
+        "crimson",
         "red",
         "dark"
       ],
       "components": {
-        "waybar": "red",
-        "wofi": "red",
-        "wlogout": "red"
+        "waybar": "crimson",
+        "wofi": "crimson",
+        "wlogout": "crimson"
       }
     },
-    "blue": {
+    "aether": {
       "tags": [
+        "aether",
+        "light",
         "blue",
-        "light"
+        "clean"
       ],
       "components": {
-        "waybar": "blue",
-        "wofi": "blue",
-        "wlogout": "blue"
+        "waybar": "aether",
+        "wofi": "aether",
+        "wlogout": "aether"
+      }
+    },
+    "ember": {
+      "tags": [
+        "ember",
+        "warm",
+        "gold"
+      ],
+      "components": {
+        "waybar": "ember",
+        "wofi": "ember",
+        "wlogout": "ember"
+      }
+    },
+    "drift": {
+      "tags": [
+        "drift",
+        "calm",
+        "ambient"
+      ],
+      "components": {
+        "waybar": "drift",
+        "wofi": "drift",
+        "wlogout": "drift"
       }
     },
     "windows": {
       "tags": [
-        "light"
+        "windows",
+        "clean",
+        "modern"
       ],
       "components": {
         "waybar": "windows",

@@ -1,37 +1,39 @@
 /*
- * Wallpaper-matched Waybar Theme
- * Colors extracted from artwork:
- * Navy: #1B2230
- * Red: #D25463
- * Steel Blue: #6A86B8
- * Light Blue: #8BB9E8
- * Grey: #3A4150
- * Text: #D5D9E0
-*/
+ * Obsidian Theme — Minimal Monochrome Waybar
+ * Focus: zero noise, high clarity, soft glass
+ */
 
 * {
   font-family: JetBrainsMonoNF;
   font-size: 13px;
+  border: none;
 }
+
+/* -------- Bar ---------- */
 
 window#waybar {
   background: transparent;
-  border: none;
-  color: #D5D9E0;
+  color: #e6e6e6;
 }
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+/* -------- Containers ---------- */
 
 .modules-left,
 .modules-center,
 .modules-right {
   margin: 0 10px;
   padding: 0 6px;
-  background-color: rgba(27, 34, 48, 0.78);
-  /* navy glass */
+
+  background-color: rgba(10, 10, 12, 0.78);
   border-radius: 10px;
-  border: 2px solid #3A4150;
-  /* muted grey */
+  border: 1px solid #1c1f26;
 }
 
+/* Ensure no nested backgrounds */
 .modules-left>widget,
 .modules-center>widget,
 .modules-right>widget {
@@ -40,42 +42,44 @@ window#waybar {
   margin: 0;
 }
 
-window#waybar.hidden {
-  opacity: 0.2;
-}
-
 /* -------- Buttons ---------- */
 
 button {
   border: none;
-  border-radius: 0;
-  box-shadow: inset 0 -3px transparent;
+  background: transparent;
+  box-shadow: inset 0 -2px transparent;
 }
 
 button:hover {
-  background: inherit;
-  box-shadow: inset 0 -2px #8BB9E8;
-  /* light blue highlight */
+  box-shadow: inset 0 -2px #3a3f4b;
 }
 
 /* -------- Workspaces ---------- */
 
+#workspaces {
+  margin: 0 4px;
+}
+
 #workspaces button {
   padding: 0 6px;
-  background: transparent;
-  color: #D5D9E0;
-  font-size: 16px;
+  color: #8b8f98;
+  font-size: 15px;
 }
 
 #workspaces button.focused {
-  color: #D25463;
-  /* red accent */
-  box-shadow: inset 0 -2px #6A86B8;
-  /* steel blue underline */
+  color: #ffffff;
+  box-shadow: inset 0 -2px #ffffff;
 }
 
 #workspaces button.urgent {
-  color: #D25463;
+  color: #ff5f5f;
+}
+
+/* -------- Window Title ---------- */
+
+#window {
+  margin: 0 4px;
+  color: #8b8f98;
 }
 
 /* -------- Modules ---------- */
@@ -91,69 +95,72 @@ button:hover {
 #tray,
 #power-profiles-daemon {
   padding: 0 8px;
-  color: #D5D9E0;
+  color: #e6e6e6;
   background: transparent;
 }
 
 #clock {
   padding: 0 25px;
-}
-
-#window,
-#workspaces {
-  margin: 0 4px;
+  color: #ffffff;
 }
 
 /* -------- Battery ---------- */
 
 #battery.charging,
 #battery.plugged {
-  background-color: #6A86B8;
-  /* steel blue */
-  color: #1B2230;
+  color: #ffffff;
 }
 
 #battery.critical:not(.charging) {
-  background-color: #D25463;
-  color: #1B2230;
-  animation: blink 0.5s steps(12) infinite alternate;
+  color: #ff5f5f;
+  animation: blink 0.6s steps(12) infinite alternate;
 }
 
 @keyframes blink {
   to {
-    background-color: #8BB9E8;
-    color: #1B2230;
+    color: #ffffff;
   }
 }
 
 /* -------- Power Profiles ---------- */
 
 #power-profiles-daemon.performance {
-  color: #D25463;
+  color: #ffffff;
 }
 
 #power-profiles-daemon.balanced {
-  color: #D5D9E0;
+  color: #e6e6e6;
 }
 
 #power-profiles-daemon.power-saver {
-  color: #6A86B8;
+  color: #8b8f98;
 }
 
-/* -------- Temp / Sound etc ---------- */
+/* -------- States ---------- */
 
 #temperature.critical {
-  color: #D25463;
+  color: #ff5f5f;
 }
 
 #network.disconnected {
-  color: #D25463;
+  color: #ff5f5f;
 }
 
 #pulseaudio.muted {
-  color: #3A4150;
+  color: #8b8f98;
 }
 
+/* -------- Tray ---------- */
+
 #tray>.needs-attention {
-  background-color: #D25463;
+  background-color: #ff5f5f;
+}
+
+/* -------- Subtle polish ---------- */
+
+tooltip {
+  background: #0a0a0c;
+  color: #e6e6e6;
+  border: 1px solid #1c1f26;
+  border-radius: 6px;
 }

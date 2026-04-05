@@ -1,63 +1,55 @@
 #!/bin/bash
-# =============================
-# wallpaper_switch.sh
-# =============================
 
-THEME_STATE_FILE="$HOME/.cache/theme_state"
+CONFIG="$HOME/.config/hypr/themes/themes.json"
+BASE="$HOME/.config/hypr/themes"
+
+THEME_STATE="$HOME/.cache/theme_state"
 WALL_STATE_PREFIX="$HOME/.cache/wallpaper_state_"
-WALL_BASE_DIR="$HOME/.config/hypr/wallpapers"
-current_wallpaper_link="$HOME/.config/hypr/wallpapers/current"
 
-# Detect current theme
-theme="gruvbox"
-if [ -f "$THEME_STATE_FILE" ]; then
-    read -r saved_theme < "$THEME_STATE_FILE"
-    [ -n "$saved_theme" ] && theme="$saved_theme"
+current_wall="$HOME/.config/hypr/wallpapers/current"
+
+theme=$(cat "$THEME_STATE" 2>/dev/null)
+[ -z "$theme" ] && theme="gruvbox"
+
+# ----------------------
+# get matching wallpapers
+# ----------------------
+list=$(jq -r --arg theme "$theme" '
+    .themes[$theme].tags? as $tags |
+    select($tags != null) |
+    .wallpapers[] |
+    select(any(.tags[]; . as $t | $tags | index($t))) |
+    "\(.id)|\(.path)"
+' "$CONFIG")
+
+if [ -z "$list" ]; then
+    notify-send "Wallpaper Error" "No wallpapers match theme: $theme"
+    exit 1
 fi
 
-wallpaper_dir="$WALL_BASE_DIR/$theme"
+choice=$(echo "$list" | cut -d'|' -f1 | wofi --dmenu -p "Wallpaper ($theme)")
+[ -z "$choice" ] && exit 0
 
-[ ! -d "$wallpaper_dir" ] && exit 1
-
-# List wallpapers (images + videos)
-wallpaper_list=$(find "$wallpaper_dir" -maxdepth 1 -type f \( \
-    -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.mp4' \
-\) -printf "%f\n" | sort)
-
-[ -z "$wallpaper_list" ] && exit 1
-
-selected=$(echo "$wallpaper_list" | wofi --dmenu -p "Select Wallpaper ($theme)")
-[ -z "$selected" ] && exit 0
-
-full_path="$wallpaper_dir/$selected"
+path=$(echo "$list" | awk -F'|' -v c="$choice" '$1==c {print $2}')
+full="$BASE/$path"
 
 # ----------------------
-# Wallpaper setter
+# apply
 # ----------------------
-set_wallpaper() {
-    local file="$1"
+pkill mpvpaper >/dev/null 2>&1
 
-    pkill mpvpaper >/dev/null 2>&1
-
-    if [[ "$file" =~ \.mp4$ ]]; then
-        pkill awww-daemon >/dev/null 2>&1
-        mpvpaper -o "loop --no-audio --hwdec=auto --vo=gpu --profile=fast" "*" "$file" &
-    else
-        if ! pgrep -x "awww-daemon" >/dev/null; then
-            awww-daemon &
-            sleep 0.4
-        fi
-        awww img "$file" --transition-type fade --transition-step 50
+if [[ "$full" =~ \.mp4$ ]]; then
+    pkill awww-daemon >/dev/null 2>&1
+    mpvpaper -o "loop --no-audio --hwdec=auto --vo=gpu --profile=fast" "*" "$full" &
+else
+    if ! pgrep -x awww-daemon >/dev/null; then
+        awww-daemon & sleep 0.3
     fi
-}
+    awww img "$full" --transition-type fade
+fi
 
-# Apply wallpaper
-set_wallpaper "$full_path"
+rm -f "$current_wall"
+ln -s "$full" "$current_wall"
 
-# Update symlink
-rm -f "$current_wallpaper_link"
-ln -s "$full_path" "$current_wallpaper_link"
-
-# Save state
-echo "$full_path" > "${WALL_STATE_PREFIX}${theme}"
+echo "$full" > "${WALL_STATE_PREFIX}${theme}"
 

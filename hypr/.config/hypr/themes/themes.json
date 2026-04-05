@@ -1,0 +1,155 @@
+{
+  "wallpapers": [
+    {
+      "id": "arch",
+      "path": "wallpapers/assets/arch.png",
+      "tags": [
+        "blue",
+        "dark"
+      ]
+    },
+    {
+      "id": "atoms",
+      "path": "wallpapers/assets/atoms.png",
+      "tags": [
+        "gruvbox",
+        "dark"
+      ]
+    },
+    {
+      "id": "black",
+      "path": "wallpapers/assets/black.jpg",
+      "tags": [
+        "dark"
+      ]
+    },
+    {
+      "id": "gold",
+      "path": "wallpapers/assets/gold.png",
+      "tags": [
+        "gruvbox",
+        "warm"
+      ]
+    },
+    {
+      "id": "home",
+      "path": "wallpapers/assets/home.jpg",
+      "tags": [
+        "light"
+      ]
+    },
+    {
+      "id": "ocean",
+      "path": "wallpapers/assets/ocean_with_cloud.png",
+      "tags": [
+        "blue",
+        "light"
+      ]
+    },
+    {
+      "id": "red",
+      "path": "wallpapers/assets/red.jpg",
+      "tags": [
+        "red",
+        "dark"
+      ]
+    },
+    {
+      "id": "sushi",
+      "path": "wallpapers/assets/sushi.jpg",
+      "tags": [
+        "gruvbox",
+        "warm"
+      ]
+    },
+    {
+      "id": "windows",
+      "path": "wallpapers/assets/windows.jpg",
+      "tags": [
+        "light"
+      ]
+    },
+    {
+      "id": "train",
+      "path": "wallpapers/assets/aesthetic-landscape-with-train.3840x2160.mp4",
+      "tags": [
+        "dark",
+        "cinematic"
+      ]
+    },
+    {
+      "id": "graceful_defeat",
+      "path": "wallpapers/assets/graceful-defeat.1920x1080.mp4",
+      "tags": [
+        "red",
+        "dark",
+        "anime"
+      ]
+    }
+  ],
+  "components": {
+    "waybar": {
+      "gruvbox": "waybar/gruvbox",
+      "red": "waybar/red",
+      "blue": "waybar/blue",
+      "windows": "waybar/windows"
+    },
+    "wofi": {
+      "gruvbox": "wofi/gruvbox/style.css",
+      "red": "wofi/red/style.css",
+      "blue": "wofi/blue/style.css",
+      "windows": "wofi/windows/style.css"
+    },
+    "wlogout": {
+      "gruvbox": "wlogout/gruvbox/style.css",
+      "red": "wlogout/red/style.css",
+      "blue": "wlogout/blue/style.css",
+      "windows": "wlogout/windows/style.css"
+    }
+  },
+  "themes": {
+    "gruvbox": {
+      "tags": [
+        "gruvbox",
+        "dark"
+      ],
+      "components": {
+        "waybar": "gruvbox",
+        "wofi": "gruvbox",
+        "wlogout": "gruvbox"
+      }
+    },
+    "red": {
+      "tags": [
+        "red",
+        "dark"
+      ],
+      "components": {
+        "waybar": "red",
+        "wofi": "red",
+        "wlogout": "red"
+      }
+    },
+    "blue": {
+      "tags": [
+        "blue",
+        "light"
+      ],
+      "components": {
+        "waybar": "blue",
+        "wofi": "blue",
+        "wlogout": "blue"
+      }
+    },
+    "windows": {
+      "tags": [
+        "light"
+      ],
+      "components": {
+        "waybar": "windows",
+        "wofi": "windows",
+        "wlogout": "windows"
+      }
+    }
+  }
+}

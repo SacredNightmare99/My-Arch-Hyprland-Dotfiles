@@ -1,172 +1,112 @@
 #!/bin/bash
 
-# -------------------------------------------------
-# Theme switcher: applies theme + last-used wallpaper
-# -------------------------------------------------
+CONFIG="$HOME/.config/hypr/themes/themes.json"
+BASE="$HOME/.config/hypr/themes"
 
-THEME_STATE_FILE="$HOME/.cache/theme_state"
+THEME_STATE="$HOME/.cache/theme_state"
 WALL_STATE_PREFIX="$HOME/.cache/wallpaper_state_"
 
-# ----------------------
-# Theme resources
-# ----------------------
-
-# Gruvbox
-gruvbox_wallpaper_dir="$HOME/.config/hypr/wallpapers/gruvbox"
-gruvbox_waybar_dir="$HOME/.config/waybar/themes/gruvbox"
-gruvbox_wofi_style="$HOME/.config/wofi/themes/gruvbox/style.css"
-gruvbox_wlogout_style="$HOME/.config/wlogout/themes/gruvbox/style.css"
-
-# Red
-red_wallpaper_dir="$HOME/.config/hypr/wallpapers/red"
-red_waybar_dir="$HOME/.config/waybar/themes/red"
-red_wofi_style="$HOME/.config/wofi/themes/red/style.css"
-red_wlogout_style="$HOME/.config/wlogout/themes/red/style.css"
-
-# Blue
-blue_wallpaper_dir="$HOME/.config/hypr/wallpapers/blue"
-blue_waybar_dir="$HOME/.config/waybar/themes/blue"
-blue_wofi_style="$HOME/.config/wofi/themes/blue/style.css"
-blue_wlogout_style="$HOME/.config/wlogout/themes/blue/style.css"
-
-# Windows
-windows_wallpaper_dir="$HOME/.config/hypr/wallpapers/windows"
-windows_waybar_dir="$HOME/.config/waybar/themes/windows"
-windows_wofi_style="$HOME/.config/wofi/themes/windows/style.css"
-windows_wlogout_style="$HOME/.config/wlogout/themes/windows/style.css"
+# symlinks
+waybar_config="$HOME/.config/waybar/config.jsonc"
+waybar_style="$HOME/.config/waybar/style.css"
+wofi_style="$HOME/.config/wofi/style.css"
+wlogout_style="$HOME/.config/wlogout/style.css"
+current_wall="$HOME/.config/hypr/wallpapers/current"
 
 # ----------------------
-# Target symlinks
-# ----------------------
-
-waybar_config_link="$HOME/.config/waybar/config.jsonc"
-waybar_style_link="$HOME/.config/waybar/style.css"
-current_wallpaper_link="$HOME/.config/hypr/wallpapers/current"
-wofi_style_link="$HOME/.config/wofi/style.css"
-wlogout_style_link="$HOME/.config/wlogout/style.css"
-
-# ----------------------
-# Wallpaper setter (core)
+# wallpaper setter
 # ----------------------
 set_wallpaper() {
     local file="$1"
 
-    # Kill previous wallpaper processes
     pkill mpvpaper >/dev/null 2>&1
 
     if [[ "$file" =~ \.mp4$ ]]; then
         pkill awww-daemon >/dev/null 2>&1
-
         mpvpaper -o "loop --no-audio --hwdec=auto --vo=gpu --profile=fast" "*" "$file" &
     else
-        # Ensure awww is running
         if ! pgrep -x "awww-daemon" >/dev/null; then
-            awww-daemon &
-            sleep 0.4
+            awww-daemon & sleep 0.3
         fi
-
-        awww img "$file" \
-            --transition-type wipe \
-            --transition-angle 30 \
-            --transition-step 90
+        awww img "$file" --transition-type wipe --transition-angle 30
     fi
 }
 
 # ----------------------
-# Helper: pick wallpaper
+# pick wallpaper
 # ----------------------
-choose_wallpaper_for_theme() {
-    local theme_name="$1"
-    local dir="$2"
-    local state_file="${WALL_STATE_PREFIX}${theme_name}"
+get_wallpaper() {
+    local theme="$1"
 
-    # 1. Try last-used wallpaper
-    if [ -f "$state_file" ]; then
-        local saved_wallpaper
-        saved_wallpaper="$(cat "$state_file")"
-
-        if [ -n "$saved_wallpaper" ] && [ -f "$saved_wallpaper" ]; then
-            echo "$saved_wallpaper"
-            return 0
-        fi
+    # try saved
+    local state="${WALL_STATE_PREFIX}${theme}"
+    if [ -f "$state" ]; then
+        local saved=$(cat "$state")
+        [ -f "$saved" ] && echo "$saved" && return
     fi
 
-    # 2. Fallback to first available file (image OR video)
-    if [ ! -d "$dir" ]; then
-        echo ""
-        return 1
-    fi
-
-    find "$dir" -maxdepth 1 -type f \( \
-        -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.mp4' \
-    \) | sort | head -n1
+    # fallback: first matching tag
+    jq -r --arg theme "$theme" '
+    .themes[$theme].tags as $tags |
+    .wallpapers[] |
+    select(any(.tags[]; . as $t | $tags | index($t))) |
+    .path
+    ' "$CONFIG" | head -n1 | while read -r path; do
+        echo "$BASE/$path"
+    done
 }
 
 # ----------------------
-# Core: apply theme
+# apply theme
 # ----------------------
 apply_theme() {
-    local theme_name="$1"
-    local wallpaper_dir="$2"
-    local waybar_dir="$3"
-    local wofi_style="$4"
-    local wlogout_style="$5"
+    local theme="$1"
 
-    local wallpaper
-    wallpaper="$(choose_wallpaper_for_theme "$theme_name" "$wallpaper_dir")"
+    wall=$(get_wallpaper "$theme")
 
-    if [ -z "$wallpaper" ]; then
-        echo "No wallpapers found for theme '$theme_name'"
-        exit 1
+    if [ -z "$wall" ]; then
+      notify-send "Theme Error" "No wallpaper found for theme: $theme"
+      exit 1
     fi
 
-    # Apply wallpaper (handles image/video automatically)
-    set_wallpaper "$wallpaper"
+    set_wallpaper "$wall"
 
-    # Update symlinks
-    rm -f "$waybar_config_link" \
-          "$waybar_style_link" \
-          "$current_wallpaper_link" \
-          "$wofi_style_link" \
-          "$wlogout_style_link"
+    waybar_key=$(jq -r ".themes[\"$theme\"].components.waybar" "$CONFIG")
+    wofi_key=$(jq -r ".themes[\"$theme\"].components.wofi" "$CONFIG")
+    wlogout_key=$(jq -r ".themes[\"$theme\"].components.wlogout" "$CONFIG")
 
-    ln -s "$waybar_dir/config.jsonc" "$waybar_config_link"
-    ln -s "$waybar_dir/style.css" "$waybar_style_link"
-    ln -s "$wallpaper" "$current_wallpaper_link"
-    ln -s "$wofi_style" "$wofi_style_link"
-    ln -s "$wlogout_style" "$wlogout_style_link"
+    waybar_path="$BASE/$(jq -r ".components.waybar[\"$waybar_key\"]" "$CONFIG")"
+    wofi_path="$BASE/$(jq -r ".components.wofi[\"$wofi_key\"]" "$CONFIG")"
+    wlogout_path="$BASE/$(jq -r ".components.wlogout[\"$wlogout_key\"]" "$CONFIG")"
 
-    # Reload waybar
+    rm -f "$waybar_config" "$waybar_style" "$wofi_style" "$wlogout_style" "$current_wall"
+
+    [ ! -f "$waybar_path/config.jsonc" ] && echo "Waybar config missing: $waybar_path"
+    [ ! -f "$wofi_path" ] && echo "Wofi missing: $wofi_path"
+    [ ! -f "$wlogout_path" ] && echo "Wlogout missing: $wlogout_path"
+
+    ln -s "$waybar_path/config.jsonc" "$waybar_config"
+    ln -s "$waybar_path/style.css" "$waybar_style"
+    ln -s "$wofi_path" "$wofi_style"
+    ln -s "$wlogout_path" "$wlogout_style"
+    ln -s "$wall" "$current_wall"
+
     killall -q waybar
-    while pgrep -u "$UID" -x waybar >/dev/null; do sleep 0.1; done
+    while pgrep -x waybar >/dev/null; do sleep 0.1; done
     waybar &
 
-    # Save state
-    echo "$theme_name" > "$THEME_STATE_FILE"
-    echo "$wallpaper" > "${WALL_STATE_PREFIX}${theme_name}"
+    echo "$theme" > "$THEME_STATE"
+    echo "$wall" > "${WALL_STATE_PREFIX}${theme}"
 }
 
 # ----------------------
-# Menu
+# menu
 # ----------------------
-THEME_LIST="Gruvbox\nRed\nBlue\nWindows"
+themes=$(jq -r '.themes | keys[]' "$CONFIG")
 
-selected_theme=$(echo -e "$THEME_LIST" | wofi --dmenu -p "Select Theme")
+selected=$(echo "$themes" | wofi --dmenu -p "Theme")
 
-[ -z "$selected_theme" ] && exit 0
+[ -z "$selected" ] && exit 0
 
-case "$selected_theme" in
-    "Gruvbox")
-        apply_theme "gruvbox" "$gruvbox_wallpaper_dir" "$gruvbox_waybar_dir" "$gruvbox_wofi_style" "$gruvbox_wlogout_style"
-        ;;
-    "Red")
-        apply_theme "red" "$red_wallpaper_dir" "$red_waybar_dir" "$red_wofi_style" "$red_wlogout_style"
-        ;;
-    "Blue")
-        apply_theme "blue" "$blue_wallpaper_dir" "$blue_waybar_dir" "$blue_wofi_style" "$blue_wlogout_style"
-        ;;
-    "Windows")
-        apply_theme "windows" "$windows_wallpaper_dir" "$windows_waybar_dir" "$windows_wofi_style" "$windows_wlogout_style"
-        ;;
-esac
+apply_theme "$selected"
 

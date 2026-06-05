@@ -15,9 +15,9 @@ vim.opt.autoread = true
 vim.opt.termguicolors = true
 vim.o.background = "dark"
 vim.opt.signcolumn = "yes" -- prevent layout shift from diagnostics
-vim.opt.cursorline = true -- highlight current line
-vim.opt.wrap = false -- don't wrap long lines in code
-vim.opt.scrolloff = 8 -- keep 8 lines of context when scrolling
+vim.opt.cursorline = true  -- highlight current line
+vim.opt.wrap = false       -- don't wrap long lines in code
+vim.opt.scrolloff = 8      -- keep 8 lines of context when scrolling
 vim.opt.sidescrolloff = 8
 
 -- Indentation
@@ -41,9 +41,6 @@ vim.opt.splitright = true
 
 -- Persistent undo
 vim.opt.undofile = true
-
--- Clipboard (system clipboard integration)
-vim.opt.clipboard = "unnamedplus"
 
 -- Completion menu
 vim.opt.completeopt = { "menu", "menuone", "noselect" }

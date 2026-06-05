@@ -25,7 +25,7 @@ return {
         "markdown", "markdown_inline", "html", "css", "json", "yaml", "toml", "latex",
         -- Your languages
         "c", "cpp", "java", "kotlin", "dart", "python", "go", "gomod", "gosum",
-        "javascript", "typescript", "tsx",
+        "javascript", "typescript", "tsx", "rust",
         -- Shell / Config
         "bash", "dockerfile", "gitignore",
       }
